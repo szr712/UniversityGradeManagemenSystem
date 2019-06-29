@@ -194,4 +194,23 @@ public class StuDao extends BaseDao {
 		return null;
 		
 	}
+	public boolean changePasscode(String passcode,String num) {
+		String sql="UPDATE shaozr_学生02 SET szr_登录密码02=? WHERE szr_学号02=?";
+		Connection connection;
+		try {
+			connection=dataSource.getConnection();
+			PreparedStatement preparedStatement=connection.prepareStatement(sql);
+			preparedStatement.setString(1,passcode);
+			preparedStatement.setString(2,num);
+			preparedStatement.executeUpdate();
+			connection.close();
+			return true;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		
+	}
 }
