@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context reloadable="true">
+    <Resource driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver" maxActive="100"
+    maxldle="30" maxWait="10000" name="jdbc/MIS" password="zirui990712" type="javax.sql.DataSource"
+    url="jdbc:sqlserver://127.0.0.1:1433;databaseName=shaoziruiMIS02" username="sa"/>
+</Context>
