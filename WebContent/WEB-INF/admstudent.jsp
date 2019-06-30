@@ -171,11 +171,11 @@
 
 			<ul class="nav nav-list">
 
-				<li class="active"><a href="AdmTeacher"> <i
+				<li class=""><a href="AdmTeacher"> <i
 						class="menu-icon fa fa-user"></i> <span class="menu-text">
 							维护教师信息 </span> <b class="arrow"></b>
 
-						<li class=""><a href="AdmStudent"> <i
+						<li class="active"><a href="AdmStudent"> <i
 								class="menu-icon fa fa-table"></i> <span class="menu-text">
 									维护学生信息 </span>
 						</a> <b class="arrow"></b>
@@ -281,7 +281,7 @@
 					<!-- /.ace-settings-container -->
 
 					<div class="page-header">
-						<h1>维护教师信息<small>${flag }</small></h1>
+						<h1>维护学生信息<small>${flag }</small></h1>
 					</div>
 					<!-- /.page-header -->
 
@@ -291,13 +291,13 @@
 							class="table table-striped table-bordered table-hover">
 							<thead>
 								<tr>
-									<th class="center">教师编号</th>
+									<th class="center">学号</th>
 									<th class="center">姓名</th>
 									<th class="center col-xs-1">性别</th>
-
 									<th class="center">年龄</th>
-									<th class="center">职称</th>
-									<th class="center">联系电话</th>
+									<th class="center">班级</th>
+									<th class="center">生源所在地</th>
+									<th class="center">已修学分总数</th>
 									<th class="center detail-col">
 									<th class="center detail-col">
 										<button class="btn btn-xs btn-warning pull-right" href="#row"
@@ -309,17 +309,18 @@
 							</thead>
 							<tbody>
 								<%
-									ArrayList<TeacherBean> tList = (ArrayList<TeacherBean>) request.getAttribute("tlist");
-									for (int i = 0; i < tList.size(); i++) {
+									ArrayList<StudentBean> sList = (ArrayList<StudentBean>) request.getAttribute("slist");
+									for (int i = 0; i < sList.size(); i++) {
 								%>
 								<tr>
 
-									<td class="center"><%=tList.get(i).getNum()%></td>
-									<td class="center"><%=tList.get(i).getName()%></td>
-									<td class="center"><%=tList.get(i).getSex()%></td>
-									<td class="center"><%=tList.get(i).getAge()%></td>
-									<td class="center"><%=tList.get(i).getRank()%></td>
-									<td class="center"><%=tList.get(i).getPhone()%></td>
+									<td class="center"><%=sList.get(i).getNum()%></td>
+									<td class="center"><%=sList.get(i).getName()%></td>
+									<td class="center"><%=sList.get(i).getSex()%></td>
+									<td class="center"><%=sList.get(i).getAge()%></td>
+									<td class="center"><%=sList.get(i).getClassname()%></td>
+									<td class="center"><%=sList.get(i).getPlace()%></td>
+									<td class="center"><%=sList.get(i).getCredit()%></td>
 
 									<td>
 
@@ -335,7 +336,7 @@
 									</td>
 									<td>
 										<div>
-											<form class="no-padding" action="AdmTDelete" method="post"
+											<form class="no-padding" action="AdmSDelete" method="post"
 												accept-charset="UTF-8">
 
 												<button class="btn btn-xs btn-danger" name="delete"
@@ -377,32 +378,33 @@
 								aria-hidden="true">
 								<span class="white">&times;</span>
 							</button>
-							新增教师信息
+							新增学生信息
 						</div>
 					</div>
 
 					<div class="modal-body no-padding">
 						<tr class="detail-row">
-							<form class="form-horizontal" role="form" action="AdmTAdd"
+							<form class="form-horizontal" role="form" action="AdmSAdd"
 								method="POST" accept-charset="UTF-8">
 								<div class="space-6"></div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label no-padding-right">
-										教师编号： </label>
+										学号： </label>
 
 									<div class="col-sm-9">
-										<input type="text" placeholder="编号" class="col-xs-8"
-											required="required" name="num" pattern="T([0-9]{4})" />
+										<input type="text" placeholder=学号 " class="col-xs-8"
+											required="required" name="num"
+											  />
 									</div>
 								</div>
-
 								<div class="form-group">
 									<label class="col-sm-3 control-label no-padding-right">
 										姓名： </label>
 
 									<div class="col-sm-9">
 										<input type="text" placeholder="姓名" class="col-xs-8"
-											required="required" name="name" />
+											required="required" name="name"
+											 />
 									</div>
 								</div>
 								<div class="form-group">
@@ -410,10 +412,10 @@
 										性别： </label>
 
 									<div class="col-sm-9">
-
+										
 										<input type="radio" name="sex" value="男" checked="true" />男 <input
 											type="radio" name="sex" value="女" />女
-
+										
 									</div>
 								</div>
 								<div class="form-group">
@@ -422,35 +424,47 @@
 
 									<div class="col-sm-9">
 										<input type="text" placeholder="年龄" class="col-xs-8"
-											required="required" name="age" />
+											required="required" name="age"
+											/>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label no-padding-right">
-										职称： </label>
+										班级： </label>
 
 									<div class="col-sm-9">
-										<select name="rank" class="col-xs-8">
-											<option value="教授">教授</option>
-											<option value="副教授">副教授</option>
-											<option value="讲师">讲师</option>
+										<select name="class" class="col-xs-8">
+											<%
+												ArrayList<String> aList = (ArrayList<String>) request.getAttribute("alist");
+												for (int j = 0; j < aList.size(); j++) {
+											%>
+											<option value="<%=aList.get(j)%>" ><%=aList.get(j)%></option>
+											<%
+												}
+											%>
+
 										</select>
 									</div>
 								</div>
+
+
 								<div class="form-group">
 									<label class="col-sm-3 control-label no-padding-right">
-										电话： </label>
+										生源所在地： </label>
 
 									<div class="col-sm-9">
-										<input type="text" placeholder="电话" class="col-xs-8"
-											required="required" name="phone" />
+										<input type="text" placeholder="生源所在地" class="col-xs-8"
+											required="required" name="place"
+											 />
 									</div>
 								</div>
+
 								<div class="space-4"></div>
 
 								<div class="clearfix form-actions">
 									<div class="col-md-offset-3 col-md-9">
-										<button class="btn btn-info" type="submit">
+										<button class="btn btn-info" type="submit" name="change"
+											>
 											<i class="ace-icon fa fa-check bigger-110"></i> 完成
 										</button>
 
@@ -468,7 +482,7 @@
 			<!-- /.modal-dialog -->
 		</div>
 		<%
-			for (int i = 0; i < tList.size(); i++) {
+			for (int i = 0; i < sList.size(); i++) {
 		%>
 		<div id="row<%=i%>" class="modal fade" tabindex="-1">
 			<div class="modal-dialog">
@@ -479,23 +493,23 @@
 								aria-hidden="true">
 								<span class="white">&times;</span>
 							</button>
-							编辑教师信息
+							编辑学生信息
 						</div>
 					</div>
 
 					<div class="modal-body no-padding">
 						<tr class="detail-row">
-							<form class="form-horizontal" role="form" action="AdmTChange"
+							<form class="form-horizontal" role="form" action="StuSChange"
 								method="POST" accept-charset="UTF-8">
 								<div class="space-6"></div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label no-padding-right">
-										编号： </label>
+										学号： </label>
 
 									<div class="col-sm-9">
 										<input type="text" placeholder=学号 " class="col-xs-8"
 											required="required" name="num"
-											value="<%=tList.get(i).getNum()%>" readonly="readonly" />
+											value="<%=sList.get(i).getNum()%>" readonly="readonly" />
 									</div>
 								</div>
 								<div class="form-group">
@@ -505,7 +519,7 @@
 									<div class="col-sm-9">
 										<input type="text" placeholder="姓名" class="col-xs-8"
 											required="required" name="name"
-											value="<%=tList.get(i).getName()%>" />
+											value="<%=sList.get(i).getName()%>" />
 									</div>
 								</div>
 								<div class="form-group">
@@ -513,15 +527,19 @@
 										性别： </label>
 
 									<div class="col-sm-9">
-									<%if(tList.get(i).getSex().equals("男")){
+										<%
+											if (sList.get(i).getSex().equals("男")) {
 										%>
 										<input type="radio" name="sex" value="男" checked="true" />男 <input
 											type="radio" name="sex" value="女" />女
-									<% }else {%>
-										<input type="radio" name="sex" value="男"  />男 <input
-											type="radio" name="sex" value="女"  checked="true"/>女
-									<%}
-									%>
+										<%
+											} else {
+										%>
+										<input type="radio" name="sex" value="男" />男 <input
+											type="radio" name="sex" value="女" checked="true" />女
+										<%
+											}
+										%>
 									</div>
 								</div>
 								<div class="form-group">
@@ -530,41 +548,48 @@
 
 									<div class="col-sm-9">
 										<input type="text" placeholder="年龄" class="col-xs-8"
-											required="required" name="age" value="<%=tList.get(i).getAge()%>" />
+											required="required" name="age"
+											value="<%=sList.get(i).getAge()%>" />
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label no-padding-right">
-										职称： </label>
+										班级： </label>
 
 									<div class="col-sm-9">
-										<select name="rank" class="col-xs-8">
-										<%if(tList.get(i).getRank().equals("教授")){
-											%><option value="教授" selected="selected">教授</option>
-											<option value="副教授" >副教授</option>
-											<option value="讲师" >讲师</option>
-										<% }else if(tList.get(i).getRank().equals("副教授")){%>
-										<option value="教授" >教授</option>
-											<option value="副教授" selected="selected">副教授</option>
-											<option value="讲师" >讲师</option>
-										<%} else if(tList.get(i).getRank().equals("讲师")){%>
-										<option value="教授" >教授</option>
-											<option value="副教授" >副教授</option>
-											<option value="讲师" selected="selected">讲师</option>
-											<%} %>
-											
+										<select name="class" class="col-xs-8">
+											<%
+												aList = (ArrayList<String>) request.getAttribute("alist");
+													for (int j = 0; j < aList.size(); j++) {
+											%>
+											<%
+												String num = aList.get(j).substring(aList.get(j).indexOf("（") + 1, aList.get(j).length() - 1);
+														if (num.equals(sList.get(i).getClassnum())) {
+											%><option value="<%=aList.get(j)%>" selected="selected"><%=aList.get(j)%></option>
+
+											<%
+												} else {
+											%>
+											<option value="<%=aList.get(j)%>"><%=aList.get(j)%></option>
+
+											<%
+												}
+													}
+											%>
+
 										</select>
 									</div>
 								</div>
-								
+
 
 								<div class="form-group">
 									<label class="col-sm-3 control-label no-padding-right">
-										电话： </label>
+										生源所在地： </label>
 
 									<div class="col-sm-9">
 										<input type="text" placeholder="电话" class="col-xs-8"
-											required="required" name="phone" value="<%=tList.get(i).getPhone()%>" />
+											required="required" name="place"
+											value="<%=sList.get(i).getPlace()%>" />
 									</div>
 								</div>
 

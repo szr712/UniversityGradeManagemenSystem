@@ -96,7 +96,7 @@
 
 												<label class="block clearfix">
 													<span class="block input-icon input-icon-right">
-															<select name="status" class="col-xs-12">
+															<select name="status" class="col-xs-12" id="login-id">
 																	<option value="学生">学生</option>
 																	<option value="教师">教师</option>
 																	<option value="管理员">管理员</option>

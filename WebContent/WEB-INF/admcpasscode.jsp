@@ -1,3 +1,4 @@
+<%@page import="shaoziruiMIS02.PlaceBean"%>
 <%@page import="shaoziruiMIS02.TeacherBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="shaoziruiMIS02.StudentBean"%>
@@ -171,7 +172,7 @@
 
 			<ul class="nav nav-list">
 
-				<li class="active"><a href="AdmTeacher"> <i
+				<li class=""><a href="AdmTeacher"> <i
 						class="menu-icon fa fa-user"></i> <span class="menu-text">
 							维护教师信息 </span> <b class="arrow"></b>
 
@@ -179,7 +180,7 @@
 								class="menu-icon fa fa-table"></i> <span class="menu-text">
 									维护学生信息 </span>
 						</a> <b class="arrow"></b>
-					<li class=""><a href="AdmPlace"> <i
+					<li class="active"><a href="AdmPlace"> <i
 								class="menu-icon fa fa-map-marker"></i> <span class="menu-text">
 									生源地统计 </span>
 						</a> <b class="arrow"></b>
@@ -281,85 +282,55 @@
 					<!-- /.ace-settings-container -->
 
 					<div class="page-header">
-						<h1>维护教师信息<small>${flag }</small></h1>
+						<h1>更改密码</h1>
 					</div>
 					<!-- /.page-header -->
 
 					<div class="row">
+						<div class="col-xs-12">
 						
-						<table id="dynamic-table"
-							class="table table-striped table-bordered table-hover">
-							<thead>
-								<tr>
-									<th class="center">教师编号</th>
-									<th class="center">姓名</th>
-									<th class="center col-xs-1">性别</th>
-
-									<th class="center">年龄</th>
-									<th class="center">职称</th>
-									<th class="center">联系电话</th>
-									<th class="center detail-col">
-									<th class="center detail-col">
-										<button class="btn btn-xs btn-warning pull-right" href="#row"
-											role="button" data-toggle="modal">
-											<i class="ace-icon fa fa-plus "></i>
-										</button>
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-								<%
-									ArrayList<TeacherBean> tList = (ArrayList<TeacherBean>) request.getAttribute("tlist");
-									for (int i = 0; i < tList.size(); i++) {
-								%>
-								<tr>
-
-									<td class="center"><%=tList.get(i).getNum()%></td>
-									<td class="center"><%=tList.get(i).getName()%></td>
-									<td class="center"><%=tList.get(i).getSex()%></td>
-									<td class="center"><%=tList.get(i).getAge()%></td>
-									<td class="center"><%=tList.get(i).getRank()%></td>
-									<td class="center"><%=tList.get(i).getPhone()%></td>
-
-									<td>
+						
+						<%String flag=(String)request.getAttribute("flag");
+						if(flag==null){
+							
+						
+						%>
 
 
-										<div>
+							<form class="form-horizontal" role="form" action="AdmCPassword">
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right">新密码：</label>
+	
+										<div class="col-sm-9">
+											<input type="text" placeholder="新密码" class="col-xs-6" required="required" name="num"/>
+										</div>
+									</div>
+	
 
-											<button class="btn btn-xs btn-info" href="#row<%=i%>"
-												role="button" data-toggle="modal" value="<%=i%>">
-												<i class="ace-icon fa fa-pencil bigger-120"></i>
+						
+									<div class="clearfix form-actions">
+										<div class="col-md-offset-3 col-md-9">
+											<button class="btn btn-info" type="submit">
+												<i class="ace-icon fa fa-check bigger-110"></i>
+												完成
 											</button>
-
+	
+											&nbsp; &nbsp; &nbsp;
+											<button class="btn" type="reset">
+												<i class="ace-icon fa fa-undo bigger-110"></i>
+												重置
+											</button>
 										</div>
-									</td>
-									<td>
-										<div>
-											<form class="no-padding" action="AdmTDelete" method="post"
-												accept-charset="UTF-8">
-
-												<button class="btn btn-xs btn-danger" name="delete"
-													value="<%=i%>">
-													<i class="ace-icon fa fa-trash-o bigger-120"></i>
-												</button>
-											</form>
-										</div>
-
-
-
-
-									</td>
-								</tr>
-								<%
-									}
-								%>
-
-
-							</tbody>
-
-
-						</table>
-					</div>
+									</div>
+								</form>
+								<%}else{
+									%>
+									<%=flag %>
+							<%	}
+						%>
+							<!-- PAGE CONTENT ENDS -->
+						</div><!-- /.col -->
+					</div><!-- /.row -->
 					<!-- /.row -->
 					<!-- /.row -->
 				</div>
@@ -367,232 +338,6 @@
 			</div>
 		</div>
 		<!-- /.main-content -->
-
-		<div id="row" class="modal fade" tabindex="-1">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header no-padding">
-						<div class="table-header">
-							<button type="button" class="close" data-dismiss="modal"
-								aria-hidden="true">
-								<span class="white">&times;</span>
-							</button>
-							新增教师信息
-						</div>
-					</div>
-
-					<div class="modal-body no-padding">
-						<tr class="detail-row">
-							<form class="form-horizontal" role="form" action="AdmTAdd"
-								method="POST" accept-charset="UTF-8">
-								<div class="space-6"></div>
-								<div class="form-group">
-									<label class="col-sm-3 control-label no-padding-right">
-										教师编号： </label>
-
-									<div class="col-sm-9">
-										<input type="text" placeholder="编号" class="col-xs-8"
-											required="required" name="num" pattern="T([0-9]{4})" />
-									</div>
-								</div>
-
-								<div class="form-group">
-									<label class="col-sm-3 control-label no-padding-right">
-										姓名： </label>
-
-									<div class="col-sm-9">
-										<input type="text" placeholder="姓名" class="col-xs-8"
-											required="required" name="name" />
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-3 control-label no-padding-right">
-										性别： </label>
-
-									<div class="col-sm-9">
-
-										<input type="radio" name="sex" value="男" checked="true" />男 <input
-											type="radio" name="sex" value="女" />女
-
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-3 control-label no-padding-right">
-										年龄： </label>
-
-									<div class="col-sm-9">
-										<input type="text" placeholder="年龄" class="col-xs-8"
-											required="required" name="age" />
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-3 control-label no-padding-right">
-										职称： </label>
-
-									<div class="col-sm-9">
-										<select name="rank" class="col-xs-8">
-											<option value="教授">教授</option>
-											<option value="副教授">副教授</option>
-											<option value="讲师">讲师</option>
-										</select>
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-3 control-label no-padding-right">
-										电话： </label>
-
-									<div class="col-sm-9">
-										<input type="text" placeholder="电话" class="col-xs-8"
-											required="required" name="phone" />
-									</div>
-								</div>
-								<div class="space-4"></div>
-
-								<div class="clearfix form-actions">
-									<div class="col-md-offset-3 col-md-9">
-										<button class="btn btn-info" type="submit">
-											<i class="ace-icon fa fa-check bigger-110"></i> 完成
-										</button>
-
-										&nbsp; &nbsp; &nbsp;
-										<button class="btn" type="reset">
-											<i class="ace-icon fa fa-undo bigger-110"></i> 重置
-										</button>
-									</div>
-								</div>
-							</form>
-					</div>
-				</div>
-				<!-- /.modal-content -->
-			</div>
-			<!-- /.modal-dialog -->
-		</div>
-		<%
-			for (int i = 0; i < tList.size(); i++) {
-		%>
-		<div id="row<%=i%>" class="modal fade" tabindex="-1">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header no-padding">
-						<div class="table-header">
-							<button type="button" class="close" data-dismiss="modal"
-								aria-hidden="true">
-								<span class="white">&times;</span>
-							</button>
-							编辑教师信息
-						</div>
-					</div>
-
-					<div class="modal-body no-padding">
-						<tr class="detail-row">
-							<form class="form-horizontal" role="form" action="AdmTChange"
-								method="POST" accept-charset="UTF-8">
-								<div class="space-6"></div>
-								<div class="form-group">
-									<label class="col-sm-3 control-label no-padding-right">
-										编号： </label>
-
-									<div class="col-sm-9">
-										<input type="text" placeholder=学号 " class="col-xs-8"
-											required="required" name="num"
-											value="<%=tList.get(i).getNum()%>" readonly="readonly" />
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-3 control-label no-padding-right">
-										姓名： </label>
-
-									<div class="col-sm-9">
-										<input type="text" placeholder="姓名" class="col-xs-8"
-											required="required" name="name"
-											value="<%=tList.get(i).getName()%>" />
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-3 control-label no-padding-right">
-										性别： </label>
-
-									<div class="col-sm-9">
-									<%if(tList.get(i).getSex().equals("男")){
-										%>
-										<input type="radio" name="sex" value="男" checked="true" />男 <input
-											type="radio" name="sex" value="女" />女
-									<% }else {%>
-										<input type="radio" name="sex" value="男"  />男 <input
-											type="radio" name="sex" value="女"  checked="true"/>女
-									<%}
-									%>
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-3 control-label no-padding-right">
-										年龄： </label>
-
-									<div class="col-sm-9">
-										<input type="text" placeholder="年龄" class="col-xs-8"
-											required="required" name="age" value="<%=tList.get(i).getAge()%>" />
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-3 control-label no-padding-right">
-										职称： </label>
-
-									<div class="col-sm-9">
-										<select name="rank" class="col-xs-8">
-										<%if(tList.get(i).getRank().equals("教授")){
-											%><option value="教授" selected="selected">教授</option>
-											<option value="副教授" >副教授</option>
-											<option value="讲师" >讲师</option>
-										<% }else if(tList.get(i).getRank().equals("副教授")){%>
-										<option value="教授" >教授</option>
-											<option value="副教授" selected="selected">副教授</option>
-											<option value="讲师" >讲师</option>
-										<%} else if(tList.get(i).getRank().equals("讲师")){%>
-										<option value="教授" >教授</option>
-											<option value="副教授" >副教授</option>
-											<option value="讲师" selected="selected">讲师</option>
-											<%} %>
-											
-										</select>
-									</div>
-								</div>
-								
-
-								<div class="form-group">
-									<label class="col-sm-3 control-label no-padding-right">
-										电话： </label>
-
-									<div class="col-sm-9">
-										<input type="text" placeholder="电话" class="col-xs-8"
-											required="required" name="phone" value="<%=tList.get(i).getPhone()%>" />
-									</div>
-								</div>
-
-								<div class="space-4"></div>
-
-								<div class="clearfix form-actions">
-									<div class="col-md-offset-3 col-md-9">
-										<button class="btn btn-info" type="submit" name="change"
-											value="<%=i%>">
-											<i class="ace-icon fa fa-check bigger-110"></i> 完成
-										</button>
-
-										&nbsp; &nbsp; &nbsp;
-										<button class="btn" type="reset">
-											<i class="ace-icon fa fa-undo bigger-110"></i> 重置
-										</button>
-									</div>
-								</div>
-							</form>
-					</div>
-				</div>
-				<!-- /.modal-content -->
-			</div>
-			<!-- /.modal-dialog -->
-		</div>
-		<%
-			}
-		%>
 	</div>
 	<div class="footer">
 		<div class="footer-inner">
