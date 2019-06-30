@@ -15,9 +15,23 @@ public class StudentBean {
 	private float gpa;
 	private String coursename;
 	private String year;
+	private String coursenum;
 	
 	
 	
+	
+	public String getCoursenum() {
+		return coursenum;
+	}
+
+
+
+	public void setCoursenum(String coursenum) {
+		this.coursenum = coursenum;
+	}
+
+
+
 	public String getYear() {
 		return year;
 	}

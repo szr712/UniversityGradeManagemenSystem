@@ -127,6 +127,7 @@ public class TeaDao extends BaseDao {
 				StudentBean studentBean = new StudentBean();
 				studentBean.setName(resultSet.getString("szr_姓名02").trim());
 				studentBean.setNum(resultSet.getString("学号"));
+				studentBean.setCredit(resultSet.getFloat("szr_已修学分总数02"));
 				studentBean.setGpa(resultSet.getFloat("均绩"));
 				sList.add(studentBean);
 			}
@@ -210,6 +211,7 @@ public class TeaDao extends BaseDao {
 					"order by 成绩 DESC";
 		}
 		
+		
 		Connection connection;
 		try {
 			connection = dataSource.getConnection();
@@ -225,7 +227,11 @@ public class TeaDao extends BaseDao {
 				studentBean.setName(resultSet.getString("姓名").trim());
 				studentBean.setCoursename(resultSet.getString("课程名称").trim());
 				studentBean.setYear(resultSet.getString("学年").trim());
+				studentBean.setCredit(resultSet.getFloat("szr_已修学分总数02"));
 				studentBean.setGpa(resultSet.getFloat("成绩"));
+				studentBean.setCoursenum(resultSet.getString("课程编号"));
+				
+				studentBean.setYear(resultSet.getString("学年").trim());
 				sList.add(studentBean);
 			}
 			connection.close();
@@ -237,5 +243,49 @@ public class TeaDao extends BaseDao {
 		}
 		return null;
 	}
+	
+	public boolean changePasscode(String passcode,String num) {
+		String sql="UPDATE shaozr_教师02 SET szr_登录密码02=? WHERE szr_教师编号02=?";
+		Connection connection;
+		try {
+			connection=dataSource.getConnection();
+			PreparedStatement preparedStatement=connection.prepareStatement(sql);
+			preparedStatement.setString(1,passcode);
+			preparedStatement.setString(2,num);
+			preparedStatement.executeUpdate();
+			connection.close();
+			return true;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		
+	}
 
+	public boolean changeGrade(Float grade,String coursenum,String num) {
+		String sql="update shaozr_学习02\r\n" + 
+				"set szr_成绩02=?\r\n" + 
+				"where szr_课程编号02=? and szr_学号02=?\r\n" + 
+				"EXEC dbo.shaozr_更新已修学分02 @szr_学号02 = ?";
+		Connection connection;
+		try {
+			connection=dataSource.getConnection();
+			PreparedStatement preparedStatement=connection.prepareStatement(sql);
+			preparedStatement.setFloat(1,grade);
+			preparedStatement.setString(2,coursenum);
+			preparedStatement.setString(3,num);
+			preparedStatement.setString(4,num);
+			preparedStatement.executeUpdate();
+			connection.close();
+			return true;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		
+	}
 }

@@ -369,6 +369,7 @@
 
 											<th class="center">学号</th>
 											<th class="center">姓名</th>
+											<th class="center">已修学分总数</th>
 											<th class="center">均绩</th>
 
 
@@ -393,6 +394,7 @@
 											%>
 											<td class="center"><%=slist.get(i).getNum()%></td>
 											<td class="center"><%=slist.get(i).getName()%></td>
+											<td class="center"><%=slist.get(i).getCredit()%></td>
 											<td class="center"><%=slist.get(i).getGpa()%></td>
 
 
