@@ -12,9 +12,48 @@ public class StudentBean {
 	private String classnum;
 	private String classname;
 	private String major;
+	private float gpa;
+	private String coursename;
+	private String year;
 	
 	
 	
+	public String getYear() {
+		return year;
+	}
+
+
+
+	public void setYear(String year) {
+		this.year = year;
+	}
+
+
+
+	public String getCoursename() {
+		return coursename;
+	}
+
+
+
+	public void setCoursename(String coursename) {
+		this.coursename = coursename;
+	}
+
+
+
+	public float getGpa() {
+		return gpa;
+	}
+
+
+
+	public void setGpa(float gpa) {
+		this.gpa = gpa;
+	}
+
+
+
 	public String getClassname() {
 		return classname;
 	}

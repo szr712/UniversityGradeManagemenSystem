@@ -6,22 +6,21 @@ import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class StuGrade
+ * Servlet implementation class TeaGpa
  */
-@WebServlet("/StuGrade")
-public class StuGrade extends HttpServlet {
+@WebServlet("/TeaGpa")
+public class TeaGpa extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public StuGrade() {
+	public TeaGpa() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -33,35 +32,28 @@ public class StuGrade extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String num = "", classnum = "";
-		Cookie cookie = null;
-		Cookie[] cookies = request.getCookies();
-		if (cookies != null) {
-			for (int i = 0; i < cookies.length; i++) {
-				cookie = cookies[i];
-				if (cookie.getName().equals("num"))
-					num = cookie.getValue();
-				if (cookie.getName().equals("classnum"))
-					classnum = cookie.getValue();
+		TeaDao teaDao = new TeaDao();
+		String num = (String) request.getParameter("num");
+		String num1=num;
+		int flag=0;
+		ArrayList<StudentBean> sList = new ArrayList<>();
+		if (num != null) {
+			num = num.substring(num.indexOf("（") + 1, num.length() - 1);
+			
+			flag = Integer.parseInt(request.getParameter("order"));
+			sList = new ArrayList<>();
+			sList = teaDao.getGpa(num, flag);
+			if(sList.isEmpty()) {
+				request.setAttribute("flag", num1+"查无数据");
 			}
-		}
-		String year = (String) request.getParameter("year");
-		StuDao stuDao = new StuDao();
-		if(year==null) {
-			ArrayList<CourseBean> cList=new ArrayList<>();
-			request.setAttribute("clist", cList);
-		}
-		else {
-			ArrayList<CourseBean> cList=stuDao.getGrade(num, classnum, year);
-			if(cList.isEmpty()) {
-				request.setAttribute("flag", year+"年查询无结果");
-			}
-			request.setAttribute("clist", cList);
 			
 		}
-		RequestDispatcher rDispatcher = request.getRequestDispatcher("/WEB-INF/stugrade.jsp");
+		request.setAttribute("f", flag);
+		ArrayList<String> aList = teaDao.getAllClass();
+		request.setAttribute("alist", aList);
+		request.setAttribute("slist", sList);
+		RequestDispatcher rDispatcher = request.getRequestDispatcher("/WEB-INF/teagpa.jsp");
 		rDispatcher.forward(request, response);
-
 	}
 
 	/**

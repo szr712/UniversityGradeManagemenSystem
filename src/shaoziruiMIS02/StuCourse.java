@@ -46,6 +46,7 @@ public class StuCourse extends HttpServlet {
 				if (cookie.getName().equals("classnum"))
 					classnum = cookie.getValue();
 			}
+		}
 			StuDao stuDao = new StuDao();
 			ArrayList<CourseBean> cList = new ArrayList<>();
 			CourseBean courseBean = new CourseBean();
@@ -53,7 +54,7 @@ public class StuCourse extends HttpServlet {
 			request.setAttribute("clist", cList);
 			RequestDispatcher rDispatcher = request.getRequestDispatcher("/WEB-INF/stucourse.jsp");
 			rDispatcher.forward(request, response);
-		}
+		
 	}
 
 	/**

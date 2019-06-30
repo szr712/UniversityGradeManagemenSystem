@@ -76,7 +76,7 @@ public class StuDao extends BaseDao {
 
 					courseBean.setTime(resultSet.getInt("学时"));
 					if (resultSet.getBoolean("考试或考察")) {
-						courseBean.setTestway("考察");
+						courseBean.setTestway("考查");
 					} else {
 						courseBean.setTestway("考试");
 					}

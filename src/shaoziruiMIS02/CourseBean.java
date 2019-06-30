@@ -13,12 +13,24 @@ public class CourseBean {
 	private String classnum;
 	private String classname;
 	private float grade;
-	
+	private float avg;
 	
 	
 	
 	
 
+
+
+
+	public float getAvg() {
+		return avg;
+	}
+
+
+
+	public void setAvg(float avg) {
+		this.avg = avg;
+	}
 
 
 

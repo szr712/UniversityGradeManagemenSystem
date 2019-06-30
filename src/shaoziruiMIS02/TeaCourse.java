@@ -6,21 +6,22 @@ import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class StuClass
+ * Servlet implementation class TeaCourse
  */
-@WebServlet("/StuClass")
-public class StuClass extends HttpServlet {
+@WebServlet("/TeaCourse")
+public class TeaCourse extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public StuClass() {
+    public TeaCourse() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,29 +31,33 @@ public class StuClass extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String aclss=(String) request.getParameter("aclss");
-		StuDao stuDao = new StuDao();
-		if(aclss==null) {
-			ArrayList<String> aList=stuDao.getAllClass();
-			ArrayList<CourseBean> cList=stuDao.getClass(null);
-			request.setAttribute("alist", aList);
+		String year=(String) request.getParameter("year");
+		String num="";
+		Cookie cookie = null;
+		TeaDao teaDao=new TeaDao();
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (int i = 0; i < cookies.length; i++) {
+				cookie = cookies[i];
+				if (cookie.getName().equals("num"))
+					num = cookie.getValue();
+			}
+		}
+		if(year==null) {
+			ArrayList<CourseBean> cList=new ArrayList<>();
 			request.setAttribute("clist", cList);
-			RequestDispatcher rDispatcher = request.getRequestDispatcher("/WEB-INF/stuclass.jsp");
-			rDispatcher.forward(request, response);
+			
 		}
 		else {
-			
-			ArrayList<String> aList=stuDao.getAllClass();
-			String num=aclss.substring(aclss.indexOf("（")+1, aclss.length()-1);
-			ArrayList<CourseBean> cList=stuDao.getClass(num);
+			ArrayList<CourseBean> cList=teaDao.getCourse(num, year);
 			if(cList.isEmpty()) {
-				request.setAttribute("flag", aclss+"查询无结果");
+				request.setAttribute("flag", year+"年查询无结果");
 			}
-			request.setAttribute("alist", aList);
 			request.setAttribute("clist", cList);
-			RequestDispatcher rDispatcher = request.getRequestDispatcher("/WEB-INF/stuclass.jsp");
-			rDispatcher.forward(request, response);
 		}
+		RequestDispatcher rDispatcher = request.getRequestDispatcher("/WEB-INF/teacourse.jsp");
+		rDispatcher.forward(request, response);
+		
 	}
 
 	/**

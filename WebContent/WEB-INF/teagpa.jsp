@@ -1,6 +1,6 @@
+<%@page import="shaoziruiMIS02.StudentBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="shaoziruiMIS02.CourseBean"%>
-<%@page import="shaoziruiMIS02.StudentBean"%>
 <%@page import="java.io.FileOutputStream"%>
 <%@page import="java.io.OutputStreamWriter"%>
 <%@page import="java.io.OutputStream"%>
@@ -113,7 +113,7 @@
 							class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
 
 
-							<li><a href="StuProfile"> <i class="ace-icon fa fa-user"></i>
+							<li><a href="TeaProfile"> <i class="ace-icon fa fa-user"></i>
 									个人信息
 							</a></li>
 
@@ -148,11 +148,11 @@
 
 			<div class="sidebar-shortcuts" id="sidebar-shortcuts">
 				<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
-					<a class="btn btn-success" href="StuCourse"> <i
+					<a class="btn btn-success" href="TeaCourse"> <i
 						class="ace-icon fa fa-table"></i>
-					</a> <a class="btn btn-info" href="StuClass"> <i
+					</a> <a class="btn btn-info" href="TeaGpa"> <i
 						class="ace-icon fa fa-info"></i>
-					</a> <a class="btn btn-warning" href="StuGrade"> <i
+					</a> <a class="btn btn-warning" href="TeaIn"> <i
 						class="ace-icon fa fa-pencil"></i>
 					</a>
 
@@ -171,23 +171,39 @@
 
 			<ul class="nav nav-list">
 
-				<li class=""><a href="StuProfile"> <i
+				<li class=""><a href="TeaProfile"> <i
 						class="menu-icon fa fa-user"></i> <span class="menu-text">
 							个人信息 </span> <b class="arrow"></b>
 
-						<li class=""><a href="StuCourse"> <i
+						<li class=""><a href="TeaCourse"> <i
 								class="menu-icon fa fa-table"></i> <span class="menu-text">
-									个人课程 </span>
+									任课查询 </span>
 						</a> <b class="arrow"></b>
-					<li class="active"><a href="StuClass"> <i
-								class="menu-icon fa fa-info"></i> <span class="menu-text">
-									班级开课 </span>
+					<li class="active open"><a href="#" class="dropdown-toggle">
+								<i class="menu-icon fa fa-info"></i> <span class="menu-text">
+									成绩查询 </span><b class="arrow fa fa-angle-down"></b>
 						</a> <b class="arrow"></b>
-					<li class=""><a href="StuGrade"> <i
+							<ul class="submenu">
+
+								<li class="active"><a href="TeaGpa"> <i
+										class="menu-icon fa fa-caret-right"></i> 均绩查询
+								</a> <b class="arrow"></b></li>
+
+								<li class=""><a href="TeaSingle"> <i
+										class="menu-icon fa fa-caret-right"></i> 单门成绩及排名
+								</a> <b class="arrow"></b></li>
+
+								<li class=""><a href="TeaAve"> <i
+										class="menu-icon fa fa-caret-right"></i> 平均成绩
+								</a> <b class="arrow"></b></li>
+
+
+							</ul></li>
+						<li class=""><a href="TeaIn"> <i
 								class="menu-icon fa fa-pencil"></i> <span class="menu-text">
-									个人成绩 </span>
+									成绩录入 </span>
 						</a> <b class="arrow"></b>
-					<li class=""><a href="StuCPassword"> <i
+					<li class=""><a href="TeaCPassword"> <i
 								class="menu-icon fa fa-cog"></i> <span class="menu-text">
 									修改密码 </span>
 						</a> <b class="arrow"></b>
@@ -285,18 +301,17 @@
 					<!-- /.ace-settings-container -->
 
 					<div class="page-header">
-						<h1>班级开课</h1>
+						<h1>均绩查询</h1>
 					</div>
 					<!-- /.page-header -->
-
 					<div class="row">
-						<form action="StuClass" method="GET">
+						<form action="TeaGpa" method="GET">
 							<div class="row">
 								<div class="col-xs-1"></div>
 								<div class="col-xs-4">
 									<label class="block"> <span
 										class="block input-icon input-icon-right"> <select
-											name="aclss" class="col-xs-10">
+											name="num" class="col-xs-10">
 												<%
 													ArrayList<String> aList = (ArrayList<String>) request.getAttribute("alist");
 													for (int i = 0; i < aList.size(); i++) {
@@ -311,16 +326,23 @@
 									</span>
 									</label>
 								</div>
-								<div class="col-xs-2"></div>
+								<div class="col-xs-1"></div>
 								<div class="col-xs-4">
 									<button type="submit"
 										class="width-35 pull-right btn btn-sm btn-primary"
-										id="login-btn">
+										id="login-btn" name="order" value=1>
 
 										<span class="bigger-110">查询</span>
 									</button>
 								</div>
-								<div class="col-xs-1"></div>
+								<div class="col-xs-2 center">
+									<button class="btn btn-sm btn-info" name="order" value=2>
+										<i class="ace-icon fa fa-arrow-down bigger-120"></i>
+									</button>
+									<button class="btn btn-sm btn-info" name="order" value=3>
+										<i class="ace-icon fa fa-arrow-up  bigger-120"></i>
+									</button>
+								</div>
 							</div>
 						</form>
 					</div>
@@ -335,27 +357,45 @@
 									class="table table-striped table-bordered table-hover">
 									<thead>
 										<tr>
-											<th class="center">班级名称</th>
-											<th class="center">课程编号</th>
-											<th class="center">课程名称</th>
-											<th class="center">学时</th>
-											<th class="center">学分</th>
+											<%
+												int f = (int) request.getAttribute("f");
+												if (f == 2 || f == 3) {
+											%>
+											<th class="center">排名</th>
+											<%
+												}
+											%>
+
+
+											<th class="center">学号</th>
+											<th class="center">姓名</th>
+											<th class="center">均绩</th>
+
 
 										</tr>
 									</thead>
-
 									<tbody>
 										<%
-											ArrayList<CourseBean> clist = (ArrayList<CourseBean>) request.getAttribute("clist");
+											ArrayList<StudentBean> slist = (ArrayList<StudentBean>) request.getAttribute("slist");
 
-											for (int i = 0; i < clist.size(); i++) {
+											for (int i = 0; i < slist.size(); i++) {
 										%>
 										<tr>
-											<td class="center"><%=clist.get(i).getClassname()%></td>
-											<td class="center"><%=clist.get(i).getCoursenum()%></td>
-											<td class="center"><%=clist.get(i).getCoursename()%></td>
-											<td class="center"><%=clist.get(i).getTime()%></td>
-											<td class="center"><%=clist.get(i).getCredit()%></td>
+											<%
+												if (f == 2) {
+											%><td class="center"><%=slist.size() - i%></td>
+											<%
+												} else if (f == 3) {
+											%>
+											<td class="center"><%=i + 1%></td>
+											<%
+												}
+											%>
+											<td class="center"><%=slist.get(i).getNum()%></td>
+											<td class="center"><%=slist.get(i).getName()%></td>
+											<td class="center"><%=slist.get(i).getGpa()%></td>
+
+
 											<%
 												}
 											%>
@@ -363,14 +403,16 @@
 									</tbody>
 
 
+
 								</table>
-								<h2>${flag}</h2>
+								<h2>${flag }</h2>
 							</div>
 							<!-- PAGE CONTENT ENDS -->
 						</div>
 						<!-- /.col -->
 					</div>
-					<!-- /.row -->
+
+
 					<!-- /.row -->
 				</div>
 				<!-- /.page-content -->

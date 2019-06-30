@@ -372,6 +372,7 @@
 
 
 								</table>
+								<h2>${flag }</h2>
 							</div>
 							<!-- PAGE CONTENT ENDS -->
 						</div>

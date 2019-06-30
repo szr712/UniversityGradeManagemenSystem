@@ -84,7 +84,7 @@ public class Login extends HttpServlet {
 				}
 				if (!sList.isEmpty() && studentBean.getPasscode().equals(password)) {
 					Cookie nameCookie = new Cookie("name", studentBean.getName().trim());
-					nameCookie.setMaxAge(60 * 60*12);
+					nameCookie.setMaxAge(60 * 60 * 12);
 					response.addCookie(nameCookie);
 					Cookie numCookie = new Cookie("num", studentBean.getNum());
 					Cookie classnumCookie = new Cookie("classnum", studentBean.getClassnum());
@@ -106,6 +106,44 @@ public class Login extends HttpServlet {
 				e.printStackTrace();
 			}
 
+		} else if (status.equals("教师")) {
+			String num = request.getParameter("num");
+			String password = request.getParameter("password");
+			String sql = "SELECT * FROM shaozr_教师02 WHERE szr_教师编号02=?";
+			PreparedStatement pStatement;
+			try {
+				pStatement = con.prepareStatement(sql);
+				pStatement.setString(1, num);
+				ArrayList<TeacherBean> tList = new ArrayList<>();
+				TeacherBean teacherBean = new TeacherBean();
+				ResultSet resultSet = pStatement.executeQuery();
+				while (resultSet.next()) {
+					teacherBean.setNum(resultSet.getString("szr_教师编号02"));
+					teacherBean.setName(resultSet.getString("szr_姓名02"));
+					teacherBean.setPasscode(resultSet.getString("szr_登录密码02"));
+					tList.add(teacherBean);
+				}
+				if (!tList.isEmpty() && teacherBean.getPasscode().equals(password)) {
+					Cookie nameCookie = new Cookie("name", teacherBean.getName().trim());
+					nameCookie.setMaxAge(60 * 60 * 12);
+					response.addCookie(nameCookie);
+					Cookie numCookie = new Cookie("num", teacherBean.getNum());
+					numCookie.setMaxAge(60 * 60 * 12);				
+					response.addCookie(numCookie);				
+					request.setAttribute("num", num);
+					RequestDispatcher rDispatcher = request.getRequestDispatcher("TeaProfile");
+					rDispatcher.forward(request, response);
+				}else {
+					request.setAttribute("fail", "登录失败请重试！");
+					RequestDispatcher rDispatcher = request.getRequestDispatcher("index.jsp");
+					rDispatcher.forward(request, response);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			
 		}
 	}
 

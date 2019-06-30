@@ -104,7 +104,7 @@
 							class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
 
 
-							<li><a href="StuProfile"> <i class="ace-icon fa fa-user"></i> 个人信息
+							<li><a href="TeaProfile"> <i class="ace-icon fa fa-user"></i> 个人信息
 								</a></li>
 
 							<li class="divider"></li>
@@ -135,9 +135,9 @@
 
 			<div class="sidebar-shortcuts" id="sidebar-shortcuts">
 				<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
-					<a class="btn btn-success" href="StuCourse"> <i class="ace-icon fa fa-table"></i>
-					</a> <a class="btn btn-info" href="StuClass"> <i class="ace-icon fa fa-info"></i>
-					</a> <a class="btn btn-warning" href="StuGrade"> <i class="ace-icon fa fa-pencil"></i>
+					<a class="btn btn-success" href="TeaCourse"> <i class="ace-icon fa fa-table"></i>
+					</a> <a class="btn btn-info" href="TeaGpa"> <i class="ace-icon fa fa-info"></i>
+					</a> <a class="btn btn-warning" href="TeaIn"> <i class="ace-icon fa fa-pencil"></i>
 					</a>
 
 
@@ -155,19 +155,52 @@
 
 			<ul class="nav nav-list">
 
-				<li class="active"><a href="StuProfile"> <i class="menu-icon fa fa-user"></i> <span class="menu-text">
+				<li class="active"><a href="TeaProfile"> <i class="menu-icon fa fa-user"></i> <span class="menu-text">
 							个人信息 </span> <b class="arrow"></b>
 
-				<li class=""><a href="StuCourse"> <i class="menu-icon fa fa-table"></i> <span class="menu-text">
-							个人课程 </span>
+				<li class=""><a href="TeaCourse"> <i class="menu-icon fa fa-table"></i> <span class="menu-text">
+							任课查询 </span>
 					</a> <b class="arrow"></b>
-				<li class=""><a href="StuClass"> <i class="menu-icon fa fa-info"></i> <span class="menu-text">
-							班级开课 </span>
+				<li class=""><a href="#" class="dropdown-toggle"> <i class="menu-icon fa fa-info"></i> <span
+							class="menu-text">
+							成绩查询 </span><b class="arrow fa fa-angle-down"></b>
 					</a> <b class="arrow"></b>
-				<li class=""><a href="StuGrade"> <i class="menu-icon fa fa-pencil"></i> <span class="menu-text">
-							个人成绩 </span>
+					<ul class="submenu">
+
+						<li class="">
+							<a href="TeaGpa">
+								<i class="menu-icon fa fa-caret-right"></i>
+								均绩查询
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+
+						<li class="">
+							<a href="TeaSingle">
+								<i class="menu-icon fa fa-caret-right"></i>
+								单门成绩及排名
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+
+						<li class="">
+							<a href="TeaAve">
+								<i class="menu-icon fa fa-caret-right"></i>
+								平均成绩
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+
+						
+					</ul>
+				</li>
+				<li class=""><a href="TeaIn"> <i class="menu-icon fa fa-pencil"></i> <span class="menu-text">
+							成绩录入 </span>
 					</a> <b class="arrow"></b>
-				<li class=""><a href="StuCPassword"> <i class="menu-icon fa fa-cog"></i> <span class="menu-text">
+				<li class=""><a href="TeaCPassword"> <i class="menu-icon fa fa-cog"></i> <span class="menu-text">
 							修改密码 </span>
 					</a> <b class="arrow"></b>
 			</ul>
@@ -296,27 +329,26 @@
 
 											<div class="profile-user-info profile-user-info-striped">
 												<div class="profile-info-row">
-													<div class="profile-info-name"> 学号: </div>
+													<div class="profile-info-name"> 编号: </div>
 
 													<div class="profile-info-value">
-														<span>${stu.num}</span>
+														<span>${tea.num}</span>
 													</div>
 												</div>
 
 												<div class="profile-info-row">
-													<div class="profile-info-name"> 姓名: </div>
+													<div class="profile-info-name">姓名: </div>
 
 													<div class="profile-info-value">
-														<span>${stu.name}</span>
+														<span>${tea.name}</span>
 
 													</div>
 												</div>
 
 												<div class="profile-info-row">
-													<div class="profile-info-name"> 性别:</div>
-
+													<div class="profile-info-name">性别:</div>
 													<div class="profile-info-value">
-														<span>${stu.sex}</span>
+														<span>${tea.sex}</span>
 
 													</div>
 												</div>
@@ -325,43 +357,28 @@
 													<div class="profile-info-name"> 年龄: </div>
 
 													<div class="profile-info-value">
-														<span>${stu.age}</span>
+														<span>${tea.age}</span>
 
 													</div>
 												</div>
 
 												<div class="profile-info-row">
-													<div class="profile-info-name"> 专业: </div>
+													<div class="profile-info-name"> 职称: </div>
 
 													<div class="profile-info-value">
-														<span>${stu.major}</span>
+														<span>${tea.rank}</span>
 
 													</div>
 												</div>
 												<div class="profile-info-row">
-													<div class="profile-info-name"> 班级: </div>
+													<div class="profile-info-name"> 联系电话: </div>
 
 													<div class="profile-info-value">
-														<span>${stu.classname}</span>
+														<span>${tea.phone}</span>
 
 													</div>
 												</div>
-												<div class="profile-info-row">
-													<div class="profile-info-name"> 生源所在地: </div>
-
-													<div class="profile-info-value">
-														<span>${stu.place}</span>
-
-													</div>
-												</div>
-												<div class="profile-info-row">
-													<div class="profile-info-name"> 已修学分总数: </div>
-
-													<div class="profile-info-value">
-														<span>${stu.credit}</span>
-
-													</div>
-												</div>
+												
 
 
 											</div>
