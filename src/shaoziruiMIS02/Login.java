@@ -144,6 +144,40 @@ public class Login extends HttpServlet {
 			}
 
 			
+		} else if (status.equals("管理员")) {
+			String num = request.getParameter("num");
+			String password = request.getParameter("password");
+			String sql = "SELECT * FROM shaozr_管理员02 WHERE szr_管理员编号02=?";
+			PreparedStatement pStatement;
+			try {
+				pStatement = con.prepareStatement(sql);
+				pStatement.setString(1, num);
+				ArrayList<String> adList = new ArrayList<>();
+				ResultSet resultSet = pStatement.executeQuery();
+				while (resultSet.next()) {
+					adList.add(resultSet.getString("szr_管理员编号02"));
+					adList.add(resultSet.getString("szr_登录密码02"));
+					
+				}
+				if (!adList .isEmpty() && adList .get(1).equals(password)) {
+					Cookie nameCookie = new Cookie("name", adList.get(0));
+					nameCookie.setMaxAge(60 * 60 * 12);
+					response.addCookie(nameCookie);
+					Cookie numCookie = new Cookie("num", adList.get(0));
+					numCookie.setMaxAge(60 * 60 * 12);				
+					response.addCookie(numCookie);				
+					request.setAttribute("num", num);
+					RequestDispatcher rDispatcher = request.getRequestDispatcher("AdmTeacher");
+					rDispatcher.forward(request, response);
+				}else {
+					request.setAttribute("fail", "登录失败请重试！");
+					RequestDispatcher rDispatcher = request.getRequestDispatcher("index.jsp");
+					rDispatcher.forward(request, response);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 

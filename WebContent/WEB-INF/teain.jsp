@@ -391,143 +391,159 @@
 											for (int i = 0; i < slist.size(); i++) {
 										%>
 										<tr>
-											
+
 											<td class="center"><%=slist.get(i).getNum()%></td>
 											<td class="center"><%=slist.get(i).getName()%></td>
 											<td class="center"><%=slist.get(i).getCredit()%></td>
 											<td class="center"><%=slist.get(i).getCoursename()%></td>
 											<td class="center"><%=slist.get(i).getYear()%></td>
-											<%if(slist.get(i).getGpa()==0) {%>
-												<td class="center">待录入</td>
-											<% }else{
+											<%
+												if (slist.get(i).getGpa() == 0) {
 											%>
-											<td class="center"><%=slist.get(i).getGpa() %></td>
+											<td class="center">待录入</td>
+											<%
+												} else {
+											%>
+											<td class="center"><%=slist.get(i).getGpa()%></td>
 											<%
 												}
 											%>
-											
-											<td class="center"><button class="btn btn-xs btn-info" href="#row<%=i%>"
-														role="button" data-toggle="modal" value="<%=i%>">
-														<i class="ace-icon fa fa-pencil bigger-120"></i>
-													</button></td>
-										<%
+
+											<td class="center"><button class="btn btn-xs btn-info"
+													href="#row<%=i%>" role="button" data-toggle="modal"
+													value="<%=i%>">
+													<i class="ace-icon fa fa-pencil bigger-120"></i>
+												</button></td>
+											<%
 												}
 											%>
+										
 									</tbody>
 
 
 
 								</table>
 								<h2>${flag }</h2>
-								
+
 							</div>
 							<!-- PAGE CONTENT ENDS -->
 						</div>
 						<!-- /.col -->
-						<%for(int i=0;i<slist.size();i++){
+						<%
+							for (int i = 0; i < slist.size(); i++) {
 						%>
 						<div id="row<%=i%>" class="modal fade" tabindex="-1">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header no-padding">
-									<div class="table-header">
-										<button type="button" class="close" data-dismiss="modal"
-											aria-hidden="true">
-											<span class="white">&times;</span>
-										</button>
-										成绩录入
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header no-padding">
+										<div class="table-header">
+											<button type="button" class="close" data-dismiss="modal"
+												aria-hidden="true">
+												<span class="white">&times;</span>
+											</button>
+											成绩录入
+										</div>
+									</div>
+
+									<div class="modal-body no-padding">
+										<tr class="detail-row">
+											<form class="form-horizontal" role="form" action="TeaIn"
+												method="POST" accept-charset="UTF-8">
+												<div class="space-6"></div>
+												<div class="form-group">
+													<label class="col-sm-3 control-label no-padding-right">
+														学号： </label>
+
+													<div class="col-sm-9">
+														<input type="text" placeholder=学号 " class="col-xs-8"
+															required="required" name="stunum"
+															value="<%=slist.get(i).getNum()%>" readonly="readonly" />
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="col-sm-3 control-label no-padding-right">
+														姓名： </label>
+
+													<div class="col-sm-9">
+														<input type="text" placeholder="姓名" class="col-xs-8"
+															required="required" name="name"
+															value="<%=slist.get(i).getName()%>" readonly="readonly" />
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="col-sm-3 control-label no-padding-right">
+														课程名称： </label>
+
+													<div class="col-sm-9">
+														<input type="text" placeholder="课程名称" class="col-xs-8"
+															required="required" name="coursename"
+															value="<%=slist.get(i).getCoursename()%>"
+															readonly="readonly" />
+													</div>
+												</div>
+												<div class="form-group" style="display: none;">
+													<label class="col-sm-3 control-label no-padding-right">
+														课程编号： </label>
+
+													<div class="col-sm-9">
+														<input type="text" placeholder="课程编号" class="col-xs-8"
+															required="required" name="coursenum"
+															value="<%=slist.get(i).getCoursenum()%>"
+															readonly="readonly" />
+													</div>
+												</div>
+												<div class="form-group" style="display: none;">
+													<label class="col-sm-3 control-label no-padding-right">
+														年： </label>
+
+													<div class="col-sm-9">
+														<input type="text" placeholder="课程编号" class="col-xs-8"
+															required="required" name="year"
+															value="<%=slist.get(i).getYear()%>" readonly="readonly" />
+													</div>
+												</div>
+
+												<div class="form-group">
+													<label class="col-sm-3 control-label no-padding-right">
+														成绩： </label>
+
+													<div class="col-sm-9">
+														<input type="text" placeholder="请输入0~100之间的小数！"
+															class="col-xs-8" required="required" name="grade"
+															value="<%=slist.get(i).getGpa()%>"
+															pattern="^(\d{1,2}(\.\d{1,3})?|100)$">
+													</div>
+												</div>
+
+
+
+												<div class="space-4"></div>
+
+
+
+												<div class="clearfix form-actions">
+													<div class="col-md-offset-3 col-md-9">
+														<button class="btn btn-info" type="submit" name="change"
+															value="<%=i%>">
+															<i class="ace-icon fa fa-check bigger-110"></i> 完成
+														</button>
+
+														&nbsp; &nbsp; &nbsp;
+														<button class="btn" type="reset">
+															<i class="ace-icon fa fa-undo bigger-110"></i> 重置
+														</button>
+													</div>
+												</div>
+											</form>
 									</div>
 								</div>
-
-								<div class="modal-body no-padding">
-									<tr class="detail-row">
-										<form class="form-horizontal" role="form" action="TeaIn"
-											method="POST" accept-charset="UTF-8">
-											<div class="space-6"></div>
-											<div class="form-group">
-												<label class="col-sm-3 control-label no-padding-right">
-													学号： </label>
-
-												<div class="col-sm-9">
-													<input type="text" placeholder=学号" class="col-xs-8"
-														required="required" name="stunum"  value="<%=slist.get(i).getNum() %>" readonly="readonly"/>
-												</div>
-											</div>
-											<div class="form-group">
-												<label class="col-sm-3 control-label no-padding-right">
-													姓名： </label>
-
-												<div class="col-sm-9">
-													<input type="text" placeholder="姓名" class="col-xs-8"
-														required="required" name="name"  value="<%=slist.get(i).getName() %>" readonly="readonly"/>
-												</div>
-											</div>
-											<div class="form-group">
-												<label class="col-sm-3 control-label no-padding-right">
-													课程名称： </label>
-
-												<div class="col-sm-9">
-													<input type="text" placeholder="课程名称" class="col-xs-8"
-														required="required" name="coursename"  value="<%=slist.get(i).getCoursename() %>" readonly="readonly"/>
-												</div>
-											</div>
-											<div class="form-group"  style="display:none;">
-												<label class="col-sm-3 control-label no-padding-right">
-													课程编号： </label>
-
-												<div class="col-sm-9">
-													<input type="text" placeholder="课程编号" class="col-xs-8"
-														required="required" name="coursenum"  value="<%=slist.get(i).getCoursenum() %>" readonly="readonly"/>
-												</div>
-											</div>
-											<div class="form-group" style="display:none;">
-												<label class="col-sm-3 control-label no-padding-right">
-													年： </label>
-
-												<div class="col-sm-9">
-													<input type="text" placeholder="课程编号" class="col-xs-8"
-														required="required" name="year"  value="<%=slist.get(i).getYear() %>" readonly="readonly"/>
-												</div>
-											</div>
-											
-											<div class="form-group">
-												<label class="col-sm-3 control-label no-padding-right">
-													成绩： </label>
-
-												<div class="col-sm-9">
-													<input type="text" placeholder="请输入0~100之间的小数！" class="col-xs-8"
-														required="required" name="grade"  value="<%=slist.get(i).getGpa() %>" pattern="^(\d{1,2}(\.\d{1,3})?|100)$">
-												</div>
-											</div>
-
-											
-
-											<div class="space-4"></div>
-
-
-
-											<div class="clearfix form-actions">
-												<div class="col-md-offset-3 col-md-9">
-													<button class="btn btn-info" type="submit" name="change" value="<%=i %>">
-														<i class="ace-icon fa fa-check bigger-110"></i> 完成
-													</button>
-
-													&nbsp; &nbsp; &nbsp;
-													<button class="btn" type="reset">
-														<i class="ace-icon fa fa-undo bigger-110"></i> 重置
-													</button>
-												</div>
-											</div>
-										</form>
-								</div>
+								<!-- /.modal-content -->
 							</div>
-							<!-- /.modal-content -->
+							<!-- /.modal-dialog -->
 						</div>
-						<!-- /.modal-dialog -->
-					</div>
-					<% 
-					}
-					%>
+						<%
+							}
+						%>
 					</div>
 
 
