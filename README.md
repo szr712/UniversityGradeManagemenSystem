@@ -14,4 +14,4 @@
    + 同一专业可能有多个班，所以同一门课可能需要多个教师上课，一个教师在一学期可能上多门课程。
 
 ### 另：
-SQL命令在webcontent文件夹中的TXT文件中
+使用SQL server，所有SQL命令在webcontent文件夹中的TXT文件中
