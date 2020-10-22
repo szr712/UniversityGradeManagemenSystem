@@ -180,11 +180,11 @@
 								class="menu-icon fa fa-table"></i> <span class="menu-text">
 									维护学生信息 </span>
 						</a> <b class="arrow"></b>
-					<li class="active"><a href="AdmPlace"> <i
+					<li class=""><a href="AdmPlace"> <i
 								class="menu-icon fa fa-map-marker"></i> <span class="menu-text">
 									生源地统计 </span>
 						</a> <b class="arrow"></b>
-					<li class=""><a href="AdmCPassword"> <i
+					<li class="active"><a href="AdmCPassword"> <i
 								class="menu-icon fa fa-cog"></i> <span class="menu-text">
 									修改密码 </span>
 						</a> <b class="arrow"></b>

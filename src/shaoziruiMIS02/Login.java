@@ -36,8 +36,8 @@ public class Login extends HttpServlet {
 		try {
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 			String url = "jdbc:sqlserver://127.0.0.1:1433;databaseName=shaoziruiMIS02";
-			con = (Connection) DriverManager.getConnection(url, "sa", "zirui990712");
-//			System.out.println("good!");
+			con = (Connection) DriverManager.getConnection(url, "sa", "123456");
+			//System.out.println("good!");
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -142,7 +142,6 @@ public class Login extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 			
 		} else if (status.equals("管理员")) {
 			String num = request.getParameter("num");
